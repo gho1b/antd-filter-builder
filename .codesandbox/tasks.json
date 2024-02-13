@@ -12,7 +12,7 @@
     "dev": {
       "name": "dev",
       "command": "pnpm dev",
-      "runAtStart": true,
+      "runAtStart": false,
       "preview": {
         "port": 5173
       }
@@ -26,6 +26,11 @@
       "name": "preview",
       "command": "pnpm preview",
       "runAtStart": false
+    },
+    "storybook": {
+      "name": "storybook",
+      "command": "pnpm storybook",
+      "runAtStart": true
     }
   }
 }
