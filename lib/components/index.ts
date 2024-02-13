@@ -1,2 +1,2 @@
-export * from "./tag-input";
 export * from "./filter-builder";
+export * from "./tag-input";

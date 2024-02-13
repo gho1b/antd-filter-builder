@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { TagInput } from "../src/components/tag-input/tag-input";
+import { TagInput } from "../lib/components/tag-input/tag-input";
 
 const meta = {
   title: "Components/TagInput",

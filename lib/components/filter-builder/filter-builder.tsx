@@ -1,4 +1,5 @@
-import { TagInput, TagInputNumber } from "../tag-input";
+import { TagInput } from "../tag-input/tag-input";
+import { TagInputNumber } from "../tag-input/tag-input-number";
 import {
   DeleteOutlined,
   PlusOutlined,
