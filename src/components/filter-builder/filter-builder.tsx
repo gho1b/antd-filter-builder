@@ -14,7 +14,6 @@ import {
   InputNumber,
   Radio,
   Select,
-  Typography,
 } from "antd";
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
@@ -350,7 +349,7 @@ function Filter({ form, filters, path }: Readonly<FilterProps>) {
       <Item
         name={[...path, "field"]}
         rules={[{ required: true, message: "Field should be pick" }]}
-        initialValue={filters?.at(0)?.dataIndex}
+        initialValue={filters?.[0]?.dataIndex}
         style={{ marginBottom: 0 }}
       >
         <Select
@@ -368,7 +367,7 @@ function Filter({ form, filters, path }: Readonly<FilterProps>) {
 
       <Item
         name={[...path, "operation"]}
-        initialValue={operationOptions?.at(0)?.value}
+        initialValue={operationOptions?.[0]?.value}
         rules={[{ required: true, message: "Operation is required" }]}
         style={{ marginBottom: 0 }}
       >
@@ -409,10 +408,14 @@ function Filter({ form, filters, path }: Readonly<FilterProps>) {
 }
 
 export type FilterBuilderProps = {
+  onFilter?: (data: DataFilterGroup) => void;
   filters?: FilterType[];
 };
 
-export function FilterBuilder({ filters }: Readonly<FilterBuilderProps>) {
+export function FilterBuilder({
+  filters,
+  onFilter,
+}: Readonly<FilterBuilderProps>) {
   const [form] = useForm<DataFilterGroup>();
 
   function renderFilter(level: number, path: (number | string)[] = []) {
@@ -523,7 +526,7 @@ export function FilterBuilder({ filters }: Readonly<FilterBuilderProps>) {
         conjunction: "and",
         filters: [{ type: "filter" }],
       }}
-      onFinish={(v) => console.log(v)}
+      onFinish={(v) => onFilter?.(v as DataFilterGroup)}
     >
       <Flex vertical gap={8}>
         {renderFilter(0)}
@@ -532,14 +535,6 @@ export function FilterBuilder({ filters }: Readonly<FilterBuilderProps>) {
           <Button htmlType="submit" type="primary" icon={<SearchOutlined />}>
             Search
           </Button>
-        </Item>
-
-        <Item shouldUpdate>
-          {() => (
-            <Typography>
-              <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
-            </Typography>
-          )}
         </Item>
       </Flex>
     </Form>
