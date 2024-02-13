@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Ant Design Filter Builder
 
 Ant Design filter builder, inspired by [react-querybuilder](https://react-querybuilder.js.org/)
 
