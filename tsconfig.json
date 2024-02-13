@@ -23,9 +23,9 @@
     "outDir": "./dist"
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue"
+    "lib/**/*.ts",
+    "lib/**/*.d.ts",
+    "lib/**/*.vue"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

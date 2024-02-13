@@ -16,23 +16,27 @@
   },
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "lib"
   ],
-  "main": "./dist/antd-filter-builder.umd.cjs",
-  "module": "./dist/antd-filter-builder.js",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/antd-filter-builder.js",
-      "require": "./dist/antd-filter-builder.umd.cjs"
+      "import": "./dist/index.js"
     }
   },
+  "types": "./dist/index.d.ts",
+  "sideEffect": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.0",
@@ -60,9 +64,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
+    "glob": "^10.3.10",
     "storybook": "^7.6.14",
     "typescript": "^5.2.2",
     "vite": "^5.0.12",
-    "vite-plugin-dts": "^3.7.2"
+    "vite-plugin-dts": "^3.7.2",
+    "vite-plugin-lib-inject-css": "^1.3.0"
   }
 }
