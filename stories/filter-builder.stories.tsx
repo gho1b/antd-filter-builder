@@ -1,10 +1,20 @@
 import { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import { FilterBuilder } from "../src/components/filter-builder";
 
 const meta = {
   title: "Components/FilterBuilder",
   component: FilterBuilder,
   tags: ["autodocs"],
+  args: {
+    onFilter: fn(),
+  },
+  argTypes: {
+    onFilter: {
+      action: "onFilter",
+      description: "Callback when submit",
+    },
+  },
 } satisfies Meta<typeof FilterBuilder>;
 
 export default meta;
