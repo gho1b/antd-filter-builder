@@ -1,20 +1,22 @@
 import { Flex, Tag } from "antd";
 import { PresetColorType, PresetStatusColorType } from "antd/lib/_util/colors";
 import { LiteralUnion } from "antd/lib/_util/type";
-import React, { useState } from "react";
+import { CSSProperties, ReactNode, useState } from "react";
+
+export type TagValue = string | number;
 
 export type TagInputBaseProps<T> = {
   id?: string;
   name?: string;
   styles?: {
-    container?: React.CSSProperties;
-    tag?: React.CSSProperties;
+    container?: CSSProperties;
+    tag?: CSSProperties;
   };
   classNames?: {
     container?: string;
     tag?: string;
   };
-  tagCloseIcon?: React.ReactNode;
+  tagCloseIcon?: ReactNode;
   borderedTag?: boolean;
   tagColor?: LiteralUnion<PresetColorType | PresetStatusColorType>;
   value?: T[];
@@ -26,13 +28,13 @@ export type TagInputBaseProps<T> = {
       removeLastTag: () => void;
     },
     value?: T[]
-  ) => React.ReactNode;
-  renderTag?: (item: T) => React.ReactNode;
+  ) => ReactNode;
+  formatTag?: (item: T) => TagValue;
   disabled?: boolean;
   required?: boolean;
 };
 
-export function TagInputBase<T>({
+export function TagInputBase<T extends TagValue = TagValue>({
   id,
   name,
   styles,
@@ -41,7 +43,7 @@ export function TagInputBase<T>({
   onChange,
   tagCloseIcon,
   children,
-  renderTag: renderItem,
+  formatTag,
   borderedTag,
   tagColor,
   disabled,
@@ -90,34 +92,25 @@ export function TagInputBase<T>({
             ...styles?.tag,
           }}
           className={classNames?.tag}
-          key={tag as any}
+          key={tag}
           closable={!disabled}
           closeIcon={tagCloseIcon}
           onClose={() => removeTag(tag)}
           color={tagColor}
           bordered={borderedTag}
         >
-          {renderItem ? renderItem(tag) : (tag as any)}
+          {formatTag ? formatTag(tag) : tag}
           <input
             type="hidden"
             readOnly
             tabIndex={-1}
             name={name}
-            value={renderItem ? renderItem(tag) : (tag as any)}
+            value={formatTag ? formatTag(tag) : tag}
             required={required}
           />
         </Tag>
       ))}
       {children({ addTag, removeTag, removeLastTag }, tags)}
-      {/* <input
-        tabIndex={-1}
-        type="hidden"
-        name={name}
-        id={id}
-        value={tags.join(valueSeparator)}
-        readOnly
-        required={required}
-      /> */}
     </Flex>
   );
 }

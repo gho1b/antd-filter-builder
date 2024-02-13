@@ -1,8 +1,31 @@
 {
-  "name": "react-vite-ts",
+  "name": "antd-filter-builder",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Ant Design filter builder",
+  "keywords": [
+    "ant design filter",
+    "filter builder",
+    "ant design",
+    "ant desing filter builder"
+  ],
+  "author": {
+    "name": "Anggit<gho1>",
+    "email": "anggit@code.id"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/antd-filter-builder.umd.cjs",
+  "module": "./dist/antd-filter-builder.js",
+  "exports": {
+    ".": {
+      "import": "./dist/antd-filter-builder.js",
+      "require": "./dist/antd-filter-builder.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

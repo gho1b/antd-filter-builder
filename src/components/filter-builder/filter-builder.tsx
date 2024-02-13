@@ -526,7 +526,7 @@ export function FilterBuilder({
         conjunction: "and",
         filters: [{ type: "filter" }],
       }}
-      onFinish={(v) => onFilter?.(v as DataFilterGroup)}
+      onFinish={(v) => onFilter?.(v)}
     >
       <Flex vertical gap={8}>
         {renderFilter(0)}
