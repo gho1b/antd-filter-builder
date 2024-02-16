@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES2020",
+    "target": "ES6",
     "declaration": true,
     "useDefineForClassFields": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
@@ -22,10 +24,6 @@
 
     "outDir": "./dist"
   },
-  "include": [
-    "lib/**/*.ts",
-    "lib/**/*.d.ts",
-    "lib/**/*.vue"
-  ],
+  "include": ["lib/**/*.ts", "lib/**/*.d.ts", "lib/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

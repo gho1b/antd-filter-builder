@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import { glob } from "glob";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
-import { libInjectCss } from "vite-plugin-lib-inject-css";
+//import { libInjectCss } from "vite-plugin-lib-inject-css";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,20 +20,20 @@ export default defineConfig({
       name: "Ant Design Filter Builder",
       // the proper extensions will be added
       fileName: "index",
-      formats: ["es", "cjs"],
+      formats: ["es"],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["react", "react/jsx-runtime"],
-      input: Object.fromEntries(
-        glob
-          .sync("./lib/**/*.{ts,tsx}")
-          .map((file) => [
-            relative("lib", file.slice(0, file.length - extname(file).length)),
-            fileURLToPath(new URL(file, import.meta.url)),
-          ])
-      ),
+      // input: Object.fromEntries(
+      //   glob
+      //     .sync("./lib/**/*.{ts,tsx}")
+      //     .map((file) => [
+      //       relative("lib", file.slice(0, file.length - extname(file).length)),
+      //       fileURLToPath(new URL(file, import.meta.url)),
+      //     ])
+      // ),
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
@@ -50,10 +50,9 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    libInjectCss(),
+    // libInjectCss(),
     dts({
       include: ["lib"],
-      copyDtsFiles: true,
     }),
   ],
 });

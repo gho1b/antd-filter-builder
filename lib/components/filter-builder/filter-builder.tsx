@@ -1,6 +1,7 @@
 import { TagInput } from "../tag-input/tag-input";
 import { TagInputNumber } from "../tag-input/tag-input-number";
 import {
+  ClearOutlined,
   DeleteOutlined,
   PlusOutlined,
   SearchOutlined,
@@ -19,7 +20,7 @@ import {
 import { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 
-const { Item, useForm, useWatch } = Form;
+const { Item, useForm, useWatch, useFormInstance } = Form;
 
 export type Cojunction = "and" | "or";
 
@@ -175,7 +176,6 @@ export type FilterType = (
 };
 
 type FilterProps = {
-  form: FormInstance;
   filters?: FilterType[];
   path: (number | string)[];
 };
@@ -263,14 +263,15 @@ function createOperationOption(type: string): OperationOption[] {
   }
 }
 
-function Filter({ form, filters, path }: Readonly<FilterProps>) {
+function Filter({ filters, path }: Readonly<FilterProps>) {
+  const form = useFormInstance();
   const [operationOptions, setOperationOptions] = useState<OperationOption[]>();
   const [fieldType, setFieldType] = useState<string>();
   const operationValue: string | undefined = useWatch(
     [...path, "operation"],
     form
   );
-  const fieldValue = useWatch([...path, "field"], form);
+  const fieldValue = useWatch([...path, "dataIndex"], form);
 
   useEffect(() => {
     const field = filters?.find((f) => f.dataIndex === fieldValue);
@@ -348,7 +349,7 @@ function Filter({ form, filters, path }: Readonly<FilterProps>) {
       </Item>
 
       <Item
-        name={[...path, "field"]}
+        name={[...path, "dataIndex"]}
         rules={[{ required: true, message: "Field should be pick" }]}
         initialValue={filters?.[0]?.dataIndex}
         style={{ marginBottom: 0 }}
@@ -409,13 +410,16 @@ function Filter({ form, filters, path }: Readonly<FilterProps>) {
 }
 
 export type FilterBuilderProps = {
+  disabled?: boolean;
   onFilter?: (data: DataFilterGroup) => void;
+  onReset?: () => void;
   filters?: FilterType[];
 };
 
 export function FilterBuilder({
   filters,
   onFilter,
+  onReset,
 }: Readonly<FilterBuilderProps>) {
   const [form] = useForm<DataFilterGroup>();
 
@@ -426,14 +430,7 @@ export function FilterBuilder({
     const typeValue = form.getFieldValue(typeName);
 
     if (typeValue === "filter") {
-      return (
-        <Filter
-          form={form}
-          path={path}
-          filters={filters}
-          key={path.join("--")}
-        />
-      );
+      return <Filter path={path} filters={filters} key={path.join("--")} />;
     }
 
     return (
@@ -528,15 +525,24 @@ export function FilterBuilder({
         filters: [{ type: "filter" }],
       }}
       onFinish={(v) => onFilter?.(v)}
+      onReset={() => onReset?.()}
     >
       <Flex vertical gap={8}>
         {renderFilter(0)}
 
-        <Item>
-          <Button htmlType="submit" type="primary" icon={<SearchOutlined />}>
-            Search
-          </Button>
-        </Item>
+        <Flex gap={8}>
+          <Item>
+            <Button htmlType="submit" type="primary" icon={<SearchOutlined />}>
+              Search
+            </Button>
+          </Item>
+
+          <Item>
+            <Button htmlType="reset" type="default" icon={<ClearOutlined />}>
+              Reset
+            </Button>
+          </Item>
+        </Flex>
       </Flex>
     </Form>
   );
